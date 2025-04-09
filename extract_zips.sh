@@ -30,15 +30,19 @@ for zipfile in *.zip; do
   
   echo "Extracting $zipfile to folder $foldername..."
   
-  # Extract zip file to the created folder
-  unzip -o "$zipfile" -d "$foldername"
+  # Extract zip file to the created folder using ditto
+  ditto -x -k "$zipfile" "$foldername"
   
   # Check if extraction was successful
   if [ $? -eq 0 ]; then
     echo "Successfully extracted $zipfile"
   else
-    echo "Failed to extract $zipfile"
+    echo "Failed to extract $zipfile. Possible reasons:"
+    echo "1. The zip file might be corrupted"
+    echo "2. The zip file might be password protected"
+    echo "3. There might be permission issues"
+    echo "4. The zip file might be using an unsupported compression method"
   fi
 done
 
-echo "All zip files have been processed." 
+echo "All zip files have been processed."
